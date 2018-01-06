@@ -4,9 +4,15 @@ using UnityEngine.UI;
 public class SelectionManager : MonoBehaviour {
 
     public UIWindow ControlWindow;
+    public ProductionItemList ProductionItemList;
     private GameObject _currentlySelected;
 
-	void Update ()
+    private void Start()
+    {
+        ControlWindow.Hide();
+    }
+
+    private void Update ()
     {
 		if (Input.GetMouseButtonDown(0))
         {
@@ -27,6 +33,8 @@ public class SelectionManager : MonoBehaviour {
                     var outline = objectHit.AddComponent<cakeslice.Outline>();
                     outline.color = 1;
                     _currentlySelected = objectHit;
+
+                    ProductionItemList.AddProductionItem("Hello world");
                 }
             }
 
