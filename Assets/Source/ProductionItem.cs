@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ProductionItem : MonoBehaviour {
+public class ProductionItem : SaganComponent {
     private Text _text;
     private Image _image;
 
