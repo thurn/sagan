@@ -45,8 +45,6 @@ public class SelectionManager : SaganService {
     {
         if (!_controlWindow)
         {
-            Debug.Log("With Root: '" + Root + "'");
-            Debug.Log("With Main Canvas: " + Root.MainCanvas);
             var window = Root.InstantiatePrefab(Root.ControlWindow, Root.MainCanvas.transform);
             _controlWindow = window.GetComponent<UIWindow>();
             var productionBox = Root.InstantiatePrefab(Root.ProductionBox, _controlWindow.transform);
