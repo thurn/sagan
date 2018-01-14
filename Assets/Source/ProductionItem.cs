@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExitHandler {
+public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler  {
     private Text _text;
     private Image _image;
     private Image _backgroundImage;
@@ -12,14 +12,14 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
         _backgroundImage.color = Colors.BackgroundColor;
     }
 
-    public void SetContent(string text)
+    public void SetContent(Item item)
     {
         if (!_text || !_image)
         {
             _text = GetComponentInChildren<Text>();
             _image = GetComponentInChildren<Image>();
         }
-        _text.text = text;
+        _text.text = item.GetName();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -30,5 +30,10 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         _backgroundImage.color = Colors.BackgroundColor;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
     }
 }

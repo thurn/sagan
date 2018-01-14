@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SelectionManager : SaganService {
+public class SelectionService : SaganService {
     private UIWindow _controlWindow;
     private GameObject _currentlySelected;
+    private Camera _camera;
+    private EventSystem _eventSystem;
+
+    private void Start()
+    {
+        _camera = Root.MainCamera;
+        _eventSystem = Root.MainCanvas.GetComponent<EventSystem>();
+    }
 
     private void Update()
     {
@@ -16,7 +25,7 @@ public class SelectionManager : SaganService {
             _currentlySelected = null;
 
             RaycastHit hit;
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
@@ -29,12 +38,7 @@ public class SelectionManager : SaganService {
                     ShowProductionWindow(_currentlySelected);
                 }
             }
-
-            if (_currentlySelected != null && _controlWindow != null)
-            {
-                _controlWindow.Show();
-            }
-            else if (_controlWindow != null)
+            else if (_controlWindow && !EventSystem.current.IsPointerOverGameObject())
             {
                 _controlWindow.Hide();
             }
@@ -50,13 +54,14 @@ public class SelectionManager : SaganService {
             var productionBox = Root.InstantiatePrefab(Root.ProductionBox, _controlWindow.transform);
             AddProductionOptions(productionBox.GetComponent<ProductionBox>(), selected);
         }
+        _controlWindow.Show();
     }
 
     private void AddProductionOptions(ProductionBox productionItemList, GameObject selected)
     {
-        productionItemList.AddProductionItem("Probe");
-        productionItemList.AddProductionItem("Extractor");
-        productionItemList.AddProductionItem("Launch System");
-        productionItemList.AddProductionItem("Autofactory");
+        productionItemList.AddProductionItem(Item.Probe);
+        productionItemList.AddProductionItem(Item.Extractor);
+        productionItemList.AddProductionItem(Item.LaunchSystem);
+        productionItemList.AddProductionItem(Item.Autofactory);
     }
 }

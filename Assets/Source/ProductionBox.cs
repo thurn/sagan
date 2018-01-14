@@ -9,10 +9,10 @@ public class ProductionBox : SaganComponent {
         _productionList = Root.InstantiatePrefab(Root.ProductionList, transform);
     }
 
-    public void AddProductionItem(string text)
+    public void AddProductionItem(Item item)
     {
         var itemObject = Root.InstantiatePrefab(Root.ProductionItem, _productionList.transform);
-        var item = itemObject.GetComponent<ProductionItem>();
-        item.SetContent(text);
+        var itemComponent = itemObject.GetComponent<ProductionItem>();
+        itemComponent.SetContent(item);
     }
 }
