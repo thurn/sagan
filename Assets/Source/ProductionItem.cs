@@ -10,7 +10,7 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
     private ProductionService _productionService;
     private Item _item;
 
-    private void Start()
+    protected override void OnCreate()
     {
         _backgroundImage = GetComponent<Image>();
         _backgroundImage.color = Colors.BackgroundColor;

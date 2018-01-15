@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224867519023255512}
   - component: {fileID: 114087244050671948}
+  - component: {fileID: 114285532780274046}
   m_Layer: 5
-  m_Name: ProductionList
+  m_Name: ControlList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,11 +45,22 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 30
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &114285532780274046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1527578138663428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddbbcc23476ba6449aa3bfd92303ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &224867519023255512
 RectTransform:
   m_ObjectHideFlags: 1

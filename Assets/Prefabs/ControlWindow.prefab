@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114257430728456412}
   - component: {fileID: 225655567212344040}
   - component: {fileID: 114032826046316488}
+  - component: {fileID: 114663899859082680}
   m_Layer: 5
   m_Name: ControlWindow
   m_TagString: Untagged
@@ -310,6 +311,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &114663899859082680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1628325194206818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b051492c5100df4c8b474e45fa73deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222286988208211372
 CanvasRenderer:
   m_ObjectHideFlags: 1

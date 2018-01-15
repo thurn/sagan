@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract class SaganService : MonoBehaviour
 {
@@ -7,5 +8,9 @@ public abstract class SaganService : MonoBehaviour
     protected void Awake()
     {
         Root = GetComponent<Root>();
+        if (Root == null)
+        {
+            throw new InvalidOperationException("Service instantiated without a Root! " + this);
+        }
     }
 }
