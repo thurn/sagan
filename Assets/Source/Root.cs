@@ -10,29 +10,25 @@ public class Root : MonoBehaviour
     public GameObject ControlList;
     public GameObject ProductionItem;
     public GameObject ProgressBar;
+    public GameObject Probe;
 
-    public T InstantiatePrefabComponent<T>(GameObject prefab, Transform parent) where T : SaganComponent
+    public GameObject InstantiatePrefab(GameObject prefab, Transform parent)
     {
-        if (prefab == null)
-        {
-            throw new ArgumentNullException("prefab");
-        }
         if (parent == null)
         {
             throw new ArgumentNullException("parent");
         }
+        return InstantiatePrefabPrivate(prefab, parent);
+    }
 
-        var item = Instantiate(prefab);
-        item.transform.SetParent(parent, false);
-        foreach (var component in item.GetComponentsInChildren<SaganComponent>())
-        {
-            component.SetRootFromRoot(this);
-        }
-        foreach (var component in item.GetComponentsInChildren<SaganComponent>())
-        {
-            component.CallOnCreateFromRoot();
-        }
+    public GameObject InstantiatePrefabWithoutParent(GameObject prefab)
+    {
+        return InstantiatePrefabPrivate(prefab, null);
+    }
 
+    public T InstantiatePrefabComponent<T>(GameObject prefab, Transform parent) where T : SaganComponent
+    {
+        var item = InstantiatePrefab(prefab, parent);
         var result = item.GetComponent<T>();
         if (result == null)
         {
@@ -44,5 +40,26 @@ public class Root : MonoBehaviour
     public T GetService<T>() where T : SaganService
     {
         return GetComponent<T>();
+    }
+
+    private GameObject InstantiatePrefabPrivate(GameObject prefab, Transform parent)
+    {
+        if (prefab == null)
+        {
+            throw new ArgumentNullException("prefab");
+        }
+
+        var item = Instantiate(prefab);
+        item.transform.SetParent(parent, false);
+        foreach (var component in item.GetComponentsInChildren<SaganComponent>())
+        {
+            component.Root = this;
+        }
+        foreach (var component in item.GetComponentsInChildren<SaganComponent>())
+        {
+            component.CallOnCreateFromRoot();
+        }
+
+        return item;
     }
 }

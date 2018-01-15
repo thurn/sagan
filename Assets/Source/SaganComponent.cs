@@ -3,21 +3,26 @@ using System;
 
 public abstract class SaganComponent : MonoBehaviour
 {
-    public bool Initialized { get; private set; }
+    private Root _root;
 
-    protected Root Root { get; private set; }
-
-    /// <summary>
-    /// Sets the root object for this component. ONLY Root itself can invoke this method!
-    /// </summary>
-    /// <param name="root"></param>
-    public void SetRootFromRoot(Root root)
+    public Root Root
     {
-        if (Root != null)
+        get
         {
-            throw new InvalidOperationException("Root already set!");
+            if (_root == null)
+            {
+                throw new InvalidOperationException("Component does not have a Root! " + this);
+            }
+            return _root;
         }
-        Root = root;
+        set
+        {
+            if (_root != null)
+            {
+                throw new InvalidOperationException("Root already set!");
+            }
+            _root = value;
+        }
     }
 
     /// <summary>
@@ -26,13 +31,12 @@ public abstract class SaganComponent : MonoBehaviour
     /// </summary>
     public void CallOnCreateFromRoot()
     {
-        if (Root == null)
+        if (_root == null)
         {
             throw new InvalidOperationException("Component instantiated without a Root! " + this);
         }
 
         OnCreate();
-        Initialized = true;
     }
 
     /// <summary>

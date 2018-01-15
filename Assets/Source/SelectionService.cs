@@ -25,12 +25,13 @@ public class SelectionService : SaganService
             if (Physics.Raycast(ray, out hit))
             {
                 var objectHit = hit.transform.gameObject;
-                if (objectHit.tag.Equals("Selectable"))
+                var producer = objectHit.GetComponent<Producer>();
+                if (producer != null)
                 {
                     var outline = objectHit.AddComponent<cakeslice.Outline>();
                     outline.color = 1;
                     _currentlySelected = objectHit;
-                    _productionService.ShowProductionWindowForBuilding(Building.Autofactory);
+                    _productionService.ShowProductionWindowForProducer(producer);
                 }
             }
             else if (!_eventSystem.IsPointerOverGameObject())
