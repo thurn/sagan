@@ -11,11 +11,11 @@ public abstract class SaganComponent : MonoBehaviour
     /// <param name="root"></param>
     public void SetRoot(Root root)
     {
-      if (Root != null)
-      {
-          throw new InvalidOperationException("Root already set!");
-      }
-      Root = root;
+        if (Root != null)
+        {
+            throw new InvalidOperationException("Root already set!");
+        }
+        Root = root;
     }
 
     /// <summary>
@@ -24,6 +24,5 @@ public abstract class SaganComponent : MonoBehaviour
     /// </summary>
     public virtual void OnCreate()
     {
-
     }
 }

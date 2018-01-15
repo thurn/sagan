@@ -10,7 +10,7 @@ public class ProductionService : SaganService
 
     private IEnumerator<WaitForSeconds> StartProductionAsync(Item item)
     {
-        Debug.Log("Started producing " + item.GetName());
+        Debug.Log("Started producing " + item.GetName() + " Waiting " + item.GetProductionTimeSeconds());
         yield return new WaitForSeconds(item.GetProductionTimeSeconds());
         Debug.Log("Finished producing " + item.GetName());
     }

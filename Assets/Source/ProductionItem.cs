@@ -1,18 +1,23 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler  {
+public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+{
     private Text _text;
     private Image _image;
     private Image _backgroundImage;
+    private ProductionService _productionService;
+    private Item _item;
 
     private void Start()
     {
         _backgroundImage = GetComponent<Image>();
         _backgroundImage.color = Colors.BackgroundColor;
+        _productionService = Root.GetService<ProductionService>();
     }
 
-    public void SetContent(Item item)
+    public void SetItem(Item item)
     {
         if (!_text || !_image)
         {
@@ -20,6 +25,7 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
             _image = GetComponentInChildren<Image>();
         }
         _text.text = item.GetName();
+        _item = item;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -34,6 +40,6 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        _productionService.StartProduction(_item);
     }
 }

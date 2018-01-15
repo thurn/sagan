@@ -13,6 +13,6 @@ public class ProductionBox : SaganComponent {
     {
         var itemObject = Root.InstantiatePrefab(Root.ProductionItem, _productionList.transform);
         var itemComponent = itemObject.GetComponent<ProductionItem>();
-        itemComponent.SetContent(item);
+        itemComponent.SetItem(item);
     }
 }

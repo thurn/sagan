@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class SelectionService : SaganService {
-    private UIWindow _controlWindow;
+public class SelectionService : SaganService
+{
+    private GameObject _controlWindow;
     private GameObject _currentlySelected;
     private Camera _camera;
     private EventSystem _eventSystem;
@@ -18,12 +18,6 @@ public class SelectionService : SaganService {
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (_currentlySelected)
-            {
-                Destroy(_currentlySelected.GetComponent<cakeslice.Outline>());
-            }
-            _currentlySelected = null;
-
             RaycastHit hit;
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
@@ -38,9 +32,14 @@ public class SelectionService : SaganService {
                     ShowProductionWindow(_currentlySelected);
                 }
             }
-            else if (_controlWindow && !EventSystem.current.IsPointerOverGameObject())
+            else if (_controlWindow && !_eventSystem.IsPointerOverGameObject())
             {
-                _controlWindow.Hide();
+                _controlWindow.SetActive(false);
+                if (_currentlySelected)
+                {
+                    Destroy(_currentlySelected.GetComponent<cakeslice.Outline>());
+                }
+                _currentlySelected = null;
             }
         }
     }
@@ -49,12 +48,11 @@ public class SelectionService : SaganService {
     {
         if (!_controlWindow)
         {
-            var window = Root.InstantiatePrefab(Root.ControlWindow, Root.MainCanvas.transform);
-            _controlWindow = window.GetComponent<UIWindow>();
+            _controlWindow = Root.InstantiatePrefab(Root.ControlWindow, Root.MainCanvas.transform);
             var productionBox = Root.InstantiatePrefab(Root.ProductionBox, _controlWindow.transform);
             AddProductionOptions(productionBox.GetComponent<ProductionBox>(), selected);
         }
-        _controlWindow.Show();
+        _controlWindow.SetActive(true);
     }
 
     private void AddProductionOptions(ProductionBox productionItemList, GameObject selected)

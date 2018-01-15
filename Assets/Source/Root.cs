@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class Root : MonoBehaviour {
+public class Root : MonoBehaviour
+{
     public Camera MainCamera;
     public Canvas MainCanvas;
     public GameObject ControlWindow;
@@ -21,5 +22,10 @@ public class Root : MonoBehaviour {
             component.OnCreate();
         }
         return item;
+    }
+
+    public T GetService<T>() where T : SaganService
+    {
+        return GetComponent<T>();
     }
 }
