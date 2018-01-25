@@ -10,14 +10,14 @@ public enum Building
 public class ProductionService : SaganService
 {
     private ControlWindow _productionWindow;
-    private Producer _currentProducer;
+    private Unit _currentProducer;
 
-    public void StartProduction(Item item)
+    public void StartProduction(UnitType item)
     {
         StartCoroutine(StartProductionAsync(item));
     }
 
-    private IEnumerator<WaitForSeconds> StartProductionAsync(Item item)
+    private IEnumerator<WaitForSeconds> StartProductionAsync(UnitType item)
     {
         _productionWindow.RemoveChildren();
         ShowConstructionProgress(item);
@@ -26,9 +26,11 @@ public class ProductionService : SaganService
 
         var production = Root.InstantiatePrefabWithoutParent(GetPrefabForItem(item));
         production.transform.position = _currentProducer.transform.position + new Vector3(2, 2, 2);
+        _productionWindow.RemoveChildren();
+        ShowProductionWindowForProducer(_currentProducer);
     }
 
-    public void ShowProductionWindowForProducer(Producer producer)
+    public void ShowProductionWindowForProducer(Unit producer)
     {
         if (_productionWindow == null)
         {
@@ -45,11 +47,12 @@ public class ProductionService : SaganService
         if (_productionWindow != null)
         {
             _productionWindow.gameObject.SetActive(false);
+            _productionWindow.RemoveChildren();
         }
         _currentProducer = null;
     }
 
-    private void ShowConstructionProgress(Item item)
+    private void ShowConstructionProgress(UnitType item)
     {
         var progressBox = _productionWindow.AddChildPrefab<ControlBox>(Root.ControlBox);
         progressBox.SetTitle("PRODUCING");
@@ -61,7 +64,7 @@ public class ProductionService : SaganService
     {
         var productionBox = _productionWindow.AddChildPrefab<ControlBox>(Root.ControlBox);
         productionBox.SetTitle("CHOOSE PRODUCTION");
-        var items = new List<Item> { Item.Probe, Item.Extractor, Item.LaunchSystem, Item.Autofactory };
+        var items = new List<UnitType> { UnitType.Probe, UnitType.Extractor, UnitType.LaunchSystem, UnitType.Autofactory };
 
         foreach (var item in items)
         {
@@ -70,12 +73,15 @@ public class ProductionService : SaganService
         }
     }
 
-    private GameObject GetPrefabForItem(Item item)
+    private GameObject GetPrefabForItem(UnitType item)
     {
         switch (item)
         {
-            case Item.Probe:
+            case UnitType.Probe:
                 return Root.Probe;
+
+            case UnitType.Extractor:
+                return Root.Extractor;
         }
         throw new InvalidOperationException("Unknown item " + item);
     }

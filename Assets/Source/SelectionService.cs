@@ -25,13 +25,19 @@ public class SelectionService : SaganService
             if (Physics.Raycast(ray, out hit))
             {
                 var objectHit = hit.transform.gameObject;
-                var producer = objectHit.GetComponent<Producer>();
-                if (producer != null)
+                var unit = objectHit.GetComponent<Unit>();
+                if (unit != null)
                 {
                     var outline = objectHit.AddComponent<cakeslice.Outline>();
                     outline.color = 1;
                     _currentlySelected = objectHit;
-                    _productionService.ShowProductionWindowForProducer(producer);
+                    if (unit.UnitType.IsProducer())
+                    {
+                        _productionService.ShowProductionWindowForProducer(unit);
+                    }
+                    else
+                    {
+                    }
                 }
             }
             else if (!_eventSystem.IsPointerOverGameObject())

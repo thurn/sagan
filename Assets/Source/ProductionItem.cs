@@ -8,7 +8,7 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
     private Image _image;
     private Image _backgroundImage;
     private ProductionService _productionService;
-    private Item _item;
+    private UnitType _item;
 
     protected override void OnCreate()
     {
@@ -17,7 +17,7 @@ public class ProductionItem : SaganComponent, IPointerEnterHandler, IPointerExit
         _productionService = Root.GetService<ProductionService>();
     }
 
-    public void SetItem(Item item)
+    public void SetItem(UnitType item)
     {
         if (!_text || !_image)
         {

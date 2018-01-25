@@ -11,6 +11,7 @@ public class Root : MonoBehaviour
     public GameObject ProductionItem;
     public GameObject ProgressBar;
     public GameObject Probe;
+    public GameObject Extractor;
 
     public GameObject InstantiatePrefab(GameObject prefab, Transform parent)
     {

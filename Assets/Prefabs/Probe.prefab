@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4089465224997386}
   - component: {fileID: 33082242083401136}
   - component: {fileID: 23499930927039440}
-  - component: {fileID: 114290572359155046}
+  - component: {fileID: 114291411094898888}
   m_Layer: 0
   m_Name: Probe
   m_TagString: Untagged
@@ -83,7 +83,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1643596736040588}
   m_Mesh: {fileID: 4300000, guid: c75f4d456361d1e41bc93673feeb9ed0, type: 3}
---- !u!114 &114290572359155046
+--- !u!114 &114291411094898888
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1643596736040588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82128b731df41e549a40e293a027c73a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dd68259c55af6640b5ad91653a0696f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitType: 1
