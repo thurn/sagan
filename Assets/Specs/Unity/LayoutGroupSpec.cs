@@ -1,0 +1,108 @@
+﻿using Specs.Core;
+using Specs.Generated;
+using Specs.Util;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Specs.Unity
+{
+  public enum LayoutDirection
+  {
+    Horizontal,
+    Vertical
+  }
+
+  public struct Padding
+  {
+    public int Left { get; }
+    public int Right { get; }
+    public int Top { get; }
+    public int Bottom { get; }
+
+    public Padding(
+      int left = 0,
+      int right = 0,
+      int top = 0,
+      int bottom = 0)
+    {
+      Left = left;
+      Right = right;
+      Top = top;
+      Bottom = bottom;
+    }
+  }
+
+  public struct ChildBehavior
+  {
+    public bool LayoutControlsWidth { get; }
+    public bool LayoutControlsHeight { get; }
+    public bool ForceExpandWidth { get; }
+    public bool ForceExpandHeight { get; }
+
+    public ChildBehavior(
+      bool layoutControlsWidth = false,
+      bool layoutControlsHeight = false,
+      bool forceExpandWidth = false,
+      bool forceExpandHeight = false)
+    {
+      LayoutControlsWidth = layoutControlsWidth;
+      LayoutControlsHeight = layoutControlsHeight;
+      ForceExpandWidth = forceExpandWidth;
+      ForceExpandHeight = forceExpandHeight;
+    }
+  }
+
+  public class LayoutGroupSpec : Spec<HorizontalOrVerticalLayoutGroup>
+  {
+    public LayoutDirection LayoutDirection { get; }
+    public Padding Padding { get; }
+    public float Spacing { get; }
+    public TextAnchor ChildAlignment { get; }
+    public ChildBehavior ChildBehavior { get; }
+
+    public LayoutGroupSpec(
+      LayoutDirection layoutDirection = LayoutDirection.Horizontal,
+      Padding padding = new Padding(),
+      float spacing = 0f,
+      TextAnchor childAlignment = TextAnchor.UpperLeft,
+      ChildBehavior childBehavior = new ChildBehavior())
+    {
+      LayoutDirection = layoutDirection;
+      Padding = padding;
+      Spacing = spacing;
+      ChildAlignment = childAlignment;
+      ChildBehavior = childBehavior;
+    }
+
+    public override HorizontalOrVerticalLayoutGroup Mount(Res res, GameObject gameObject)
+    {
+      switch (LayoutDirection)
+      {
+        case LayoutDirection.Horizontal:
+          return gameObject.AddComponent<HorizontalLayoutGroup>();
+
+        case LayoutDirection.Vertical:
+          return gameObject.AddComponent<VerticalLayoutGroup>();
+        default:
+          throw Errors.UnknownEnumValue(LayoutDirection);
+      }
+    }
+
+    public override void Update(Res res, HorizontalOrVerticalLayoutGroup component)
+    {
+      component.padding = OffsetForPadding(Padding);
+      component.spacing = Spacing;
+      component.childAlignment = ChildAlignment;
+      component.childForceExpandWidth = ChildBehavior.ForceExpandWidth;
+      component.childForceExpandHeight = ChildBehavior.ForceExpandHeight;
+      component.childControlWidth = ChildBehavior.LayoutControlsWidth;
+      component.childControlHeight = ChildBehavior.LayoutControlsHeight;
+    }
+
+    public override HorizontalOrVerticalLayoutGroup GetInstance(GameObject gameObject) =>
+      gameObject.GetComponent<HorizontalOrVerticalLayoutGroup>();
+  
+    private static RectOffset OffsetForPadding(Padding padding) =>
+      new RectOffset(padding.Left, padding.Right, padding.Top, padding.Bottom);
+  }
+}
