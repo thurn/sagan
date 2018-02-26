@@ -8,21 +8,21 @@ namespace Sagan.Specs
 {
   public class WindowHeaderSpec : CompositeSpec
   {
-    public WindowHeaderSpec(string windowTitle, float windowWidth) : base(
+    public WindowHeaderSpec(string windowTitle) : base(
       name: "WindowHeader",
       transform: Transform(),
-      children: Children(windowTitle, windowWidth))
+      children: Children(windowTitle))
     {
     }
 
     private static ITransformSpec Transform() =>
-      new RectTransformSpec(
-        size: new Vector2(x: 0, y: 210f));
+      new RectTransformSpec();
  
-    private static ImmutableList<ISpec> Children(
-      string windowTitle,
-      float windowWidth) =>
+    private static IImmutableList<ISpec> Children(
+      string windowTitle) =>
       SpecList(
+        new LayoutElementSpec(
+          preferredHeight: 200f),
         new LayoutGroupSpec(
           layoutDirection: LayoutDirection.Vertical,
           childBehavior: new ChildBehavior(
@@ -32,7 +32,7 @@ namespace Sagan.Specs
         new CompositeSpec(
           name: "WindowHeaderBackground",
           transform: new RectTransformSpec(
-            size: new Vector2(x: windowWidth * 0.9f, y: 50),
+            size: new Vector2(x: 0f, y: 50),
             pivot: TextAnchor.UpperCenter),
           children: SpecList(
             new ImageSpec(
@@ -43,7 +43,7 @@ namespace Sagan.Specs
 
     private static CompositeSpec Image(SpriteName imageName) =>
       new CompositeSpec(
-        name: "WindowImage",
+        name: "WindowHeaderImage",
         transform: new RectTransformSpec(
           size: new Vector2(x: 500f, y: 150f)),
         children: SpecList(
@@ -53,7 +53,7 @@ namespace Sagan.Specs
 
     private static CompositeSpec Text(string windowTitle) =>
       new CompositeSpec(
-        name: "WindowTitle",
+        name: "WindowHeaderTitle",
         transform: new RectTransformSpec(
           horizontalAnchor: HorizontalAnchor.Stretch,
           verticalAnchor: VerticalAnchor.Stretch),

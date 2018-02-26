@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sagan.Core;
+using UnityEngine;
 
 public class Unit : SaganComponent
 {

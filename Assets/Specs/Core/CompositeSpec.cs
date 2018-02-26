@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Specs.Generated;
 using Specs.Util;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Specs.Core
@@ -10,24 +12,29 @@ namespace Specs.Core
   {
     private readonly string _name;
     private readonly ITransformSpec _transform;
-    private readonly ImmutableList<ISpec> _children;
-    private readonly Dictionary<GameObject, GameObject> _gameObjectCache =
-      new Dictionary<GameObject, GameObject>();
+    private readonly IImmutableList<ISpec> _children;
  
+    public override string Name => _name;
+
     public CompositeSpec(
       string name,
       ITransformSpec transform,
-      IEnumerable<ISpec> children = null)
+      IImmutableList<ISpec> children = null,
+      string specId = "")
     {
-      _name = Requires.NotNullPassthrough(name, nameof(name));
-      _transform = Requires.NotNullPassthrough(transform, nameof(transform));
-      _children = ImmutableList.CreateRange(children) ?? ImmutableList<ISpec>.Empty;
+      _name = ValidateName(name) + ValidateName(specId);
+      _transform = Errors.CheckNotNullPassthrough(transform, nameof(transform));
+      _children = children ?? ImmutableArray<ISpec>.Empty;
     }
  
     public sealed override GameObject Mount(Res res, GameObject parent)
     {
-      Requires.NotNull(res, nameof(res));
-      Requires.NotNull(parent, nameof(parent));
+      Errors.CheckNotNull(res, nameof(res));
+      Errors.CheckNotNull(parent, nameof(parent));
+      if (parent.transform.Find(_name))
+      {
+        throw Errors.DuplicateChild(parent.name, _name);
+      }
 
       var gameObject = new GameObject(_name);
       var transform = _transform.MountTransform(res, gameObject);
@@ -43,28 +50,40 @@ namespace Specs.Core
         child.UpdateSpec(res, gameObject);
       }
 
-      // We update the transform last because e.g. LayoutGroups can modify its behavior
+      Debug.Log("Updating transform for " + Name);
       _transform.UpdateTransform(res, transform);
 
-      _gameObjectCache[parent] = gameObject;
       return gameObject;
     }
  
     public sealed override GameObject GetInstance(GameObject parent)
     {
-      Requires.NotNull(parent, nameof(parent));
-      if (!_gameObjectCache.ContainsKey(parent))
+      var transform = parent.transform.Find(_name);
+
+      if (Errors.IsNullOrUnityNull(transform) || Errors.IsNullOrUnityNull(transform.gameObject))
       {
-        throw Errors.ParentNotInCache(parent.name, _name);
+        throw Errors.InstanceNotFound(parent.name, _name);
       }
 
-      return _gameObjectCache[parent];
+      return transform.gameObject;
+    }
+
+    private string ValidateName(string name)
+    {
+      Errors.CheckNotNull(name, nameof(name));
+      
+      if (name.Contains(value: "/"))
+      {
+        throw Errors.InvalidName(name);
+      }
+      
+      return name;
     }
   
     public sealed override void Update(Res res, GameObject instance)
     {
-      Requires.NotNull(res, nameof(res));
-      Requires.NotNull(instance, nameof(instance));
+      Errors.CheckNotNull(res, nameof(res));
+      Errors.CheckNotNull(instance, nameof(instance));
 
       foreach (var child in _children)
       {

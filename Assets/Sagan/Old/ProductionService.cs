@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sagan.Core;
 using UnityEngine;
 
 public enum Building

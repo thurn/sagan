@@ -59,8 +59,8 @@ namespace Specs.Unity
       Vector3 eulerRotation = new Vector3(),
       Vector3? scale = null)
     {
-      Position = position;
       Size = size;
+      Position = position;
       Pivot = pivotPosition.GetValueOrDefault(new Vector2(x: 0.5f, y: 0.5f));
       AnchorMin = anchorMin;
       AnchorMax = anchorMax;
@@ -76,8 +76,16 @@ namespace Specs.Unity
 
     public override void Update(Res res, RectTransform component)
     {
-      component.position = Position;
+//      component.sizeDelta = Vector2.zero;
+//      component.position = Vector3.zero;
+//      component.pivot = Vector2.zero;
+//      component.anchorMin = Vector2.zero;
+//      component.anchorMax = Vector2.zero;
+//      component.localEulerAngles = Vector3.zero;
+//      component.localScale = Vector3.one;
+
       component.sizeDelta = Size;
+      component.position = Position;
       component.pivot = Pivot;
       component.anchorMin = AnchorMin;
       component.anchorMax = AnchorMax;

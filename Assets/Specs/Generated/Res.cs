@@ -11,6 +11,7 @@ namespace Specs.Generated
     public Sprite WindowHeader;
     public Sprite TextFieldNormal;
     public Font EurostileBqBoldExtended;
+    public Font RobotoRegular;
 
     public Material GetMaterial(MaterialName materialName)
     {
@@ -42,6 +43,8 @@ namespace Specs.Generated
       {
         case FontName.EurostileBqBoldExtended:
           return EurostileBqBoldExtended;
+        case FontName.RobotoRegular:
+          return RobotoRegular;
         default:
           throw Errors.UnknownEnumValue(fontName);
       }

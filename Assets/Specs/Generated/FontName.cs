@@ -3,5 +3,6 @@
   public enum FontName
   {
     EurostileBqBoldExtended,
+    RobotoRegular
   }
 }

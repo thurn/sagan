@@ -61,7 +61,7 @@ namespace Specs.Unity
     public ChildBehavior ChildBehavior { get; }
 
     public LayoutGroupSpec(
-      LayoutDirection layoutDirection = LayoutDirection.Horizontal,
+      LayoutDirection layoutDirection,
       Padding padding = new Padding(),
       float spacing = 0f,
       TextAnchor childAlignment = TextAnchor.UpperLeft,

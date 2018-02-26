@@ -11,10 +11,9 @@ namespace Sagan.Specs
     public ControlBoxSpec(
       string boxName,
       string boxTitle,
-      float height,
-      ImmutableList<ISpec> children = null) : base(
-        name: boxName,
-        transform: Transform(height),
+      IImmutableList<ISpec> children = null) : base(
+        name: boxName + "ControlBox",
+        transform: Transform(),
         children: Children(
           boxName, 
           boxTitle,
@@ -24,15 +23,14 @@ namespace Sagan.Specs
 
     }
  
-    private static ITransformSpec Transform(float height) =>
+    private static ITransformSpec Transform() =>
       new RectTransformSpec(
-        size: new Vector2(x: 0f, y: height),
         pivot: TextAnchor.UpperCenter);
  
-    private static ImmutableList<ISpec> Children(
+    private static IImmutableList<ISpec> Children(
       string boxName,
       string boxTitle,
-      ImmutableList<ISpec> children) =>
+      IImmutableList<ISpec> children) =>
       SpecList(
         new ImageSpec(
           sourceImage: SpriteName.TextFieldNormal,
@@ -43,13 +41,13 @@ namespace Sagan.Specs
             left: 20,
             top: 10,
             right: 20,
-            bottom: 10),
+            bottom: 30),
           spacing: 10,
           childBehavior: new ChildBehavior(
             layoutControlsWidth: true,
             forceExpandWidth: true)),
         new CompositeSpec(
-          name: boxName + "Title",
+          name: boxName + "ControlBoxTitle",
           transform: new RectTransformSpec(
             size: new Vector2(x: 0f, y: 50f)),
           children: SpecList(
@@ -57,6 +55,7 @@ namespace Sagan.Specs
               text: boxTitle,
               font: FontName.EurostileBqBoldExtended,
               fontStyle: FontStyle.Bold,
-              fontSize: 22))));
+              fontSize: 22)))
+        ).AddRange(children);
   }
 }

@@ -9,14 +9,14 @@ namespace Sagan.Specs
   public class OverlayCanvasSpec : CompositeSpec
   {
     public OverlayCanvasSpec(
-      ImmutableList<ISpec> children = null) : base(
-      name: "Canvas",
+      IImmutableList<ISpec> children = null) : base(
+      name: "OverlayCanvas",
       transform: new RectTransformSpec(),
       children: Children(children))
     {
     }
 
-    private static ImmutableList<ISpec> Children(ImmutableList<ISpec> children) =>
+    private static IImmutableList<ISpec> Children(IImmutableList<ISpec> children) =>
       SpecList(
         new CanvasSpec(
           renderMode: new ScreenSpaceOverlayRenderMode(

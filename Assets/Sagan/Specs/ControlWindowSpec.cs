@@ -13,8 +13,8 @@ namespace Sagan.Specs
     public ControlWindowSpec(
       string windowName,
       string windowTitle,
-      ImmutableList<ControlBoxSpec> children) : base(
-      windowName,
+      IImmutableList<ControlBoxSpec> children) : base(
+      windowName + "ControlWindow",
       Transform(),
       Children(windowTitle, children))
     {
@@ -27,9 +27,9 @@ namespace Sagan.Specs
         verticalAnchor: VerticalAnchor.Stretch,
         horizontalAnchor: HorizontalAnchor.Right);
  
-    private static ImmutableList<ISpec> Children(
+    private static IImmutableList<ISpec> Children(
       string windowTitle,
-      ImmutableList<ControlBoxSpec> children) =>
+      IImmutableList<ControlBoxSpec> children) =>
       SpecList(
         new CanvasRendererSpec(),
         new ImageSpec(
@@ -42,6 +42,7 @@ namespace Sagan.Specs
           childAlignment: TextAnchor.UpperCenter,
           childBehavior: new ChildBehavior(
             layoutControlsWidth: true,
+            layoutControlsHeight: true,
             forceExpandWidth: true),
           spacing: 20,
           padding: new Padding(
@@ -49,7 +50,7 @@ namespace Sagan.Specs
             right: 30,
             top: 30,
             bottom: 30)),
-        new WindowHeaderSpec(windowTitle, WindowWidth)
+        new WindowHeaderSpec(windowTitle)
       ).AddRange(children);
   }
 }
