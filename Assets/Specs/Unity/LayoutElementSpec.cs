@@ -40,13 +40,13 @@ namespace Specs.Unity
       FlexibleHeight = flexibleHeight;
     }
 
-    public override LayoutElement Mount(Res res, GameObject parent) =>
+    protected override LayoutElement Mount(Res res, GameObject parent) =>
       parent.AddComponent<LayoutElement>();
 
-    public override LayoutElement GetInstance(GameObject parent) =>
+    protected override LayoutElement GetInstance(GameObject parent) =>
       parent.GetComponent<LayoutElement>();
 
-    public override void Update(Res res, LayoutElement layoutElement)
+    protected override void Update(Res res, LayoutElement layoutElement)
     {
       if (MinWidth.HasValue)
       {

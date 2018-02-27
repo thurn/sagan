@@ -102,14 +102,14 @@ namespace Specs.Unity
       RenderMode = renderMode ?? new ScreenSpaceOverlayRenderMode();
       AdditionalShaderChannels = additionalShaderChannels;
     }
- 
-    public override Canvas Mount(Res res, GameObject gameObject) =>
+
+    protected override Canvas Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<Canvas>();
 
-    public override Canvas GetInstance(GameObject gameObject) =>
+    protected override Canvas GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<Canvas>();
-  
-    public override void Update(Res res, Canvas canvas)
+
+    protected override void Update(Res res, Canvas canvas)
     {
       RenderMode.SetParams(res, canvas);
       canvas.additionalShaderChannels = AdditionalShaderChannels;

@@ -18,16 +18,16 @@ namespace Specs.Unity
       DragThreshold = dragThreshold;
     }
 
-    public override EventSystem Mount(Res res, GameObject gameObject)
+    protected override EventSystem Mount(Res res, GameObject gameObject)
       => gameObject.AddComponent<EventSystem>();
 
-    public override void Update(Res res, EventSystem eventSystem)
+    protected override void Update(Res res, EventSystem eventSystem)
     {
       eventSystem.sendNavigationEvents = SendNavigationEvents;
       eventSystem.pixelDragThreshold = DragThreshold;
     }
 
-    public override EventSystem GetInstance(GameObject gameObject) =>
+    protected override EventSystem GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<EventSystem>();
   }
 }

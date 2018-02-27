@@ -18,16 +18,16 @@ namespace Specs.Unity
       BlockingObjects = blockingObjects;
     }
 
-    public override GraphicRaycaster Mount(Res res, GameObject gameObject)
+    protected override GraphicRaycaster Mount(Res res, GameObject gameObject)
       => gameObject.AddComponent<GraphicRaycaster>();
 
-    public override void Update(Res res, GraphicRaycaster graphicRaycaster)
+    protected override void Update(Res res, GraphicRaycaster graphicRaycaster)
     {
       graphicRaycaster.ignoreReversedGraphics = IgnoreReversedGraphics;
       graphicRaycaster.blockingObjects = BlockingObjects;
     }
 
-    public override GraphicRaycaster GetInstance(GameObject gameObject) =>
+    protected override GraphicRaycaster GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<GraphicRaycaster>();
   }
 }

@@ -33,10 +33,10 @@ namespace Specs.Unity
       ForceModuleToBeActive = forceModuleToBeActive;
     }
 
-    public override StandaloneInputModule Mount(Res res, GameObject gameObject)
+    protected override StandaloneInputModule Mount(Res res, GameObject gameObject)
       => gameObject.AddComponent<StandaloneInputModule>();
 
-    public override void Update(Res res, StandaloneInputModule inputModule)
+    protected override void Update(Res res, StandaloneInputModule inputModule)
     {
       inputModule.horizontalAxis = HorizontalAxisName;
       inputModule.verticalAxis = VerticalAxisName;
@@ -47,7 +47,7 @@ namespace Specs.Unity
       inputModule.forceModuleActive = ForceModuleToBeActive;
     }
 
-    public override StandaloneInputModule GetInstance(GameObject gameObject) =>
+    protected override StandaloneInputModule GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<StandaloneInputModule>();
   }
 }

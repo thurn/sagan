@@ -74,7 +74,7 @@ namespace Specs.Unity
       ChildBehavior = childBehavior;
     }
 
-    public override HorizontalOrVerticalLayoutGroup Mount(Res res, GameObject gameObject)
+    protected override HorizontalOrVerticalLayoutGroup Mount(Res res, GameObject gameObject)
     {
       switch (LayoutDirection)
       {
@@ -88,7 +88,7 @@ namespace Specs.Unity
       }
     }
 
-    public override void Update(Res res, HorizontalOrVerticalLayoutGroup component)
+    protected override void Update(Res res, HorizontalOrVerticalLayoutGroup component)
     {
       component.padding = OffsetForPadding(Padding);
       component.spacing = Spacing;
@@ -99,7 +99,7 @@ namespace Specs.Unity
       component.childControlHeight = ChildBehavior.LayoutControlsHeight;
     }
 
-    public override HorizontalOrVerticalLayoutGroup GetInstance(GameObject gameObject) =>
+    protected override HorizontalOrVerticalLayoutGroup GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<HorizontalOrVerticalLayoutGroup>();
   
     private static RectOffset OffsetForPadding(Padding padding) =>

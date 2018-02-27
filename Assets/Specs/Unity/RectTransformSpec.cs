@@ -67,14 +67,14 @@ namespace Specs.Unity
       EulerRotation = eulerRotation;
       Scale = scale.GetValueOrDefault(Vector3.one);
     }
-  
-    public override RectTransform Mount(Res res, GameObject gameObject) =>
+
+    protected override RectTransform Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<RectTransform>();
 
-    public override RectTransform GetInstance(GameObject gameObject) =>
+    protected override RectTransform GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<RectTransform>();
 
-    public override void Update(Res res, RectTransform component)
+    protected override void Update(Res res, RectTransform component)
     {
 //      component.sizeDelta = Vector2.zero;
 //      component.position = Vector3.zero;

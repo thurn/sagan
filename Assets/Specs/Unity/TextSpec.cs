@@ -54,10 +54,10 @@ namespace Specs.Unity
       IsRaycastTarget = isRaycastTarget;
     }
 
-    public override Text Mount(Res res, GameObject gameObject) =>
+    protected override Text Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<Text>();
 
-    public override void Update(Res res, Text component)
+    protected override void Update(Res res, Text component)
     {
       component.text = Text;
 
@@ -85,7 +85,7 @@ namespace Specs.Unity
       component.raycastTarget = IsRaycastTarget;
     }
 
-    public override Text GetInstance(GameObject gameObject) =>
+    protected override Text GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<Text>();
   }
 

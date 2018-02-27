@@ -180,11 +180,11 @@ namespace Specs.Unity
       IsRaycastTarget = isRaycastTarget;
       ImageType = imageType ?? new SimpleImageType();
     }
- 
-    public override Image Mount(Res res, GameObject gameObject) =>
+
+    protected override Image Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<Image>();
 
-    public override void Update(Res res, Image image)
+    protected override void Update(Res res, Image image)
     {
       if (SourceImage.HasValue)
       {
@@ -200,7 +200,7 @@ namespace Specs.Unity
       ImageType.SetParams(image);
     }
 
-    public override Image GetInstance(GameObject gameObject) =>
+    protected override Image GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<Image>();
   }
 }

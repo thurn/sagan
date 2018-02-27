@@ -23,13 +23,13 @@ namespace Specs.Unity
       IgnoreParentGroups = ignoreParentGroups;
     }
 
-    public override CanvasGroup Mount(Res res, GameObject gameObject) =>
+    protected override CanvasGroup Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<CanvasGroup>();
 
-    public override CanvasGroup GetInstance(GameObject gameObject) =>
+    protected override CanvasGroup GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<CanvasGroup>();
- 
-    public override void Update(Res res, CanvasGroup canvasGroup)
+
+    protected override void Update(Res res, CanvasGroup canvasGroup)
     {
       canvasGroup.alpha = Alpha;
       canvasGroup.interactable = IsInteractable;

@@ -8,9 +8,13 @@ namespace Specs.Core
 {
   public interface ISpec
   {
-    void MountSpec(Res res, GameObject parent);
+    void PerformMount(Res res, GameObject parent);
  
-    void UpdateSpec(Res res, GameObject parent);
+    void PerformUpdate(Res res, GameObject parent);
+
+    string Name { get; }
+
+    bool Composite { get; }
   }
 
   public class Spec
@@ -24,27 +28,18 @@ namespace Specs.Core
   {
     public virtual string Name => GetType().Name;
 
+    public virtual bool Composite => false;
+ 
+    // TODO: move caching to a separate coordinator object
     private readonly Dictionary<GameObject, T> _instanceCache = new Dictionary<GameObject,T>();
 
-    public abstract T Mount(Res res, GameObject parent);
+    protected abstract T Mount(Res res, GameObject parent);
+
+    protected abstract T GetInstance(GameObject parent);
+
+    protected abstract void Update(Res res, T instance);
  
-    public abstract T GetInstance(GameObject parent);
-
-    public abstract void Update(Res res, T instance);
-
-    public T GetSpecInstance(GameObject parent)
-    {
-      if (_instanceCache.ContainsKey(parent))
-      {
-        return _instanceCache[parent];
-      }
-
-      var instance = GetInstance(parent);
-      _instanceCache[parent] = instance;
-      return instance;
-    }
- 
-    public void MountSpec(Res res, GameObject parent)
+    public void PerformMount(Res res, GameObject parent)
     {
       Errors.CheckNotNull(res, nameof(res));
       Errors.CheckNotNull(parent, nameof(parent));
@@ -56,7 +51,7 @@ namespace Specs.Core
       }
     }
  
-    public void UpdateSpec(Res res, GameObject parent)
+    public void PerformUpdate(Res res, GameObject parent)
     {
       Errors.CheckNotNull(res, nameof(res));
       Errors.CheckNotNull(parent, nameof(parent));
@@ -67,11 +62,25 @@ namespace Specs.Core
         throw Errors.InstanceNotFound(parent.name, Name);
       }
 
-      Debug.Log("Updating " + Name);
       Update(res, instance);
     }
 
     public static IImmutableList<ISpec> SpecList(params ISpec[] children) =>
       ImmutableArray.CreateRange(children);
+ 
+    public static IImmutableList<ISpec> SpecList(IEnumerable<ISpec> children) =>
+      ImmutableArray.CreateRange(children);
+ 
+    private T GetSpecInstance(GameObject parent)
+    {
+      if (_instanceCache.ContainsKey(parent))
+      {
+        return _instanceCache[parent];
+      }
+
+      var instance = GetInstance(parent);
+      _instanceCache[parent] = instance;
+      return instance;
+    }
   }
 }

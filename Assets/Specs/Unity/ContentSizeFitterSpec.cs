@@ -18,16 +18,16 @@ namespace Specs.Unity
       VerticalFitMode = verticalFitMode;
     }
 
-    public override ContentSizeFitter Mount(Res res, GameObject gameObject) =>
+    protected override ContentSizeFitter Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<ContentSizeFitter>();
 
-    public override void Update(Res res, ContentSizeFitter sizeFitter)
+    protected override void Update(Res res, ContentSizeFitter sizeFitter)
     {
       sizeFitter.horizontalFit = HorizontalFitMode;
       sizeFitter.verticalFit = VerticalFitMode;
     }
 
-    public override ContentSizeFitter GetInstance(GameObject gameObject) =>
+    protected override ContentSizeFitter GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<ContentSizeFitter>();
   }
 }

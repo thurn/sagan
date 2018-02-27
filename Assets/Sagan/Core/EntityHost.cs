@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Immutable;
 using Sagan.Specs;
 using Specs.Core;
 using Specs.Generated;
@@ -18,20 +17,21 @@ namespace Sagan.Core
       _spec = Create();
       if (_root == null)
       {
-        _root = _spec.Mount(Res, gameObject);
+        _root = _spec.MountRoot(Res, gameObject);
+        _spec.PerformUpdate(Res, gameObject);
       }
       else
       {
         try
         {
-          _spec.UpdateSpec(Res, gameObject);
+          _spec.PerformUpdate(Res, gameObject);
         }
         catch (Exception e)
         {
           Debug.LogError(e.Message);
           Debug.Log(message: "Failed to update spec, attempting full rebuild");
           DestroyImmediate(_root);
-          _root = _spec.Mount(Res, gameObject);
+          _root = _spec.MountRoot(Res, gameObject);
         }
       }
     }

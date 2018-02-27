@@ -27,10 +27,10 @@ namespace Specs.Unity
       ReferencePixelsPerUnit = referencePixelsPerUnit;
     }
 
-    public override CanvasScaler Mount(Res res, GameObject gameObject) =>
+    protected override CanvasScaler Mount(Res res, GameObject gameObject) =>
       gameObject.AddComponent<CanvasScaler>();
 
-    public override void Update(Res res, CanvasScaler canvasScaler)
+    protected override void Update(Res res, CanvasScaler canvasScaler)
     {
       canvasScaler.uiScaleMode = ScaleMode;
       canvasScaler.referenceResolution = ReferenceResolution;
@@ -39,7 +39,7 @@ namespace Specs.Unity
       canvasScaler.referencePixelsPerUnit = ReferencePixelsPerUnit;
     }
 
-    public override CanvasScaler GetInstance(GameObject gameObject) =>
+    protected override CanvasScaler GetInstance(GameObject gameObject) =>
       gameObject.GetComponent<CanvasScaler>();
   }
 }
