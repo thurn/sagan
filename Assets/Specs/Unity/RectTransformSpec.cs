@@ -4,6 +4,7 @@ using Specs.Core;
 using Specs.Generated;
 using Specs.Util;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Specs.Unity
 {
@@ -23,7 +24,7 @@ namespace Specs.Unity
     Stretch
   }
 
-  public class RectTransformSpec : Spec<RectTransform>, ITransformSpec
+  public class RectTransformSpec : ComponentSpec<RectTransform>, ITransformSpec
   {
     public Vector2 Size { get; }
     public Vector3 Position { get; }
@@ -68,29 +69,58 @@ namespace Specs.Unity
       Scale = scale.GetValueOrDefault(Vector3.one);
     }
 
-    protected override RectTransform Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<RectTransform>();
-
-    protected override RectTransform GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<RectTransform>();
-
-    protected override void Update(Res res, RectTransform component)
+    protected override void UpdateComponent(Res res, RectTransform transform)
     {
-//      component.sizeDelta = Vector2.zero;
-//      component.position = Vector3.zero;
-//      component.pivot = Vector2.zero;
-//      component.anchorMin = Vector2.zero;
-//      component.anchorMax = Vector2.zero;
-//      component.localEulerAngles = Vector3.zero;
-//      component.localScale = Vector3.one;
+      //      component.sizeDelta = Vector2.zero;
+      //      component.position = Vector3.zero;
+      //      component.pivot = Vector2.zero;
+      //      component.anchorMin = Vector2.zero;
+      //      component.anchorMax = Vector2.zero;
+      //      component.localEulerAngles = Vector3.zero;
+      //      component.localScale = Vector3.one;
 
-      component.sizeDelta = Size;
-      component.position = Position;
-      component.pivot = Pivot;
-      component.anchorMin = AnchorMin;
-      component.anchorMax = AnchorMax;
-      component.localEulerAngles = EulerRotation;
-      component.localScale = Scale;
+      transform.sizeDelta = Size;
+      transform.position = Position;
+      transform.pivot = Pivot;
+      transform.anchorMin = AnchorMin;
+      transform.anchorMax = AnchorMax;
+      transform.localEulerAngles = EulerRotation;
+      transform.localScale = Scale;
+
+//      if (transform.sizeDelta != Size)
+//      {
+//        transform.sizeDelta = Size;
+//      }
+//      
+//      if (transform.position != Position)
+//      {
+//        transform.position = Position;
+//      }
+//
+//      if (transform.pivot != Pivot)
+//      {
+//        transform.pivot = Pivot;
+//      }
+//
+//      if (transform.anchorMin != AnchorMin)
+//      {
+//        transform.anchorMin = AnchorMin;
+//      }
+//
+//      if (transform.anchorMax != AnchorMax)
+//      {
+//        transform.anchorMax = AnchorMax;
+//      }
+//
+//      if (transform.localEulerAngles != EulerRotation)
+//      {
+//        transform.localEulerAngles = EulerRotation;
+//      }
+//
+//      if (transform.localScale != Scale)
+//      {
+//        transform.localScale = Scale;
+//      }
     }
  
     private static Vector2 PivotValue(TextAnchor pivot)
@@ -179,16 +209,13 @@ namespace Specs.Unity
     public Transform MountTransform(Res res, GameObject gameObject) =>
       Mount(res, gameObject);
 
-    public Transform GetTransformInstance(GameObject gameObject) =>
-      GetInstance(gameObject);
-
     public void UpdateTransform(Res res, Transform instance)
     {
       Requires.Argument(
         instance is RectTransform,
         nameof(instance),
         message: "Must pass a RectTransform");
-      Update(res, (RectTransform)instance);
+      UpdateComponent(res, (RectTransform)instance);
     }
   }
 }

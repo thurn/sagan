@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Specs.Unity
 {
-  public class StandaloneInputModuleSpec : Spec<StandaloneInputModule>
+  public class StandaloneInputModuleSpec : BehaviourSpec<StandaloneInputModule>
   {
     public string HorizontalAxisName { get; }
     public string VerticalAxisName { get; }
@@ -33,10 +33,7 @@ namespace Specs.Unity
       ForceModuleToBeActive = forceModuleToBeActive;
     }
 
-    protected override StandaloneInputModule Mount(Res res, GameObject gameObject)
-      => gameObject.AddComponent<StandaloneInputModule>();
-
-    protected override void Update(Res res, StandaloneInputModule inputModule)
+    protected override void UpdateComponent(Res res, StandaloneInputModule inputModule)
     {
       inputModule.horizontalAxis = HorizontalAxisName;
       inputModule.verticalAxis = VerticalAxisName;
@@ -46,8 +43,5 @@ namespace Specs.Unity
       inputModule.repeatDelay = RepeatDelay;
       inputModule.forceModuleActive = ForceModuleToBeActive;
     }
-
-    protected override StandaloneInputModule GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<StandaloneInputModule>();
   }
 }

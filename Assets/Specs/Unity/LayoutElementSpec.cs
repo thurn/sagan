@@ -1,11 +1,10 @@
 ﻿using Specs.Core;
 using Specs.Generated;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace Specs.Unity
 {
-  public class LayoutElementSpec : Spec<LayoutElement>
+  public class LayoutElementSpec : BehaviourSpec<LayoutElement>
   {
     public float? MinWidth { get; }
     public float? MinHeight { get; }
@@ -40,13 +39,7 @@ namespace Specs.Unity
       FlexibleHeight = flexibleHeight;
     }
 
-    protected override LayoutElement Mount(Res res, GameObject parent) =>
-      parent.AddComponent<LayoutElement>();
-
-    protected override LayoutElement GetInstance(GameObject parent) =>
-      parent.GetComponent<LayoutElement>();
-
-    protected override void Update(Res res, LayoutElement layoutElement)
+    protected override void UpdateComponent(Res res, LayoutElement layoutElement)
     {
       if (MinWidth.HasValue)
       {

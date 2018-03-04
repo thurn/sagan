@@ -27,11 +27,10 @@ namespace Sagan.Specs
         verticalAnchor: VerticalAnchor.Stretch,
         horizontalAnchor: HorizontalAnchor.Right);
  
-    private static IImmutableList<ISpec> Children(
+    private static IImmutableList<Spec> Children(
       string windowTitle,
       IImmutableList<ControlBoxSpec> children) =>
       SpecList(
-        new CanvasRendererSpec(),
         new ImageSpec(
           sourceImage: SpriteName.WindowBackground,
           imageType: new TiledImageType()

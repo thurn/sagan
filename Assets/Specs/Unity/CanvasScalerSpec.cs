@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Specs.Unity
 {
-  public class CanvasScalerSpec : Spec<CanvasScaler>
+  public class CanvasScalerSpec : BehaviourSpec<CanvasScaler>
   {
     public CanvasScaler.ScaleMode ScaleMode { get; }
     public Vector2 ReferenceResolution { get; }
@@ -27,10 +27,7 @@ namespace Specs.Unity
       ReferencePixelsPerUnit = referencePixelsPerUnit;
     }
 
-    protected override CanvasScaler Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<CanvasScaler>();
-
-    protected override void Update(Res res, CanvasScaler canvasScaler)
+    protected override void UpdateComponent(Res res, CanvasScaler canvasScaler)
     {
       canvasScaler.uiScaleMode = ScaleMode;
       canvasScaler.referenceResolution = ReferenceResolution;
@@ -38,8 +35,5 @@ namespace Specs.Unity
       canvasScaler.matchWidthOrHeight = MatchWidthOrHeight;
       canvasScaler.referencePixelsPerUnit = ReferencePixelsPerUnit;
     }
-
-    protected override CanvasScaler GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<CanvasScaler>();
   }
 }

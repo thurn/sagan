@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Specs.Unity
 {
-  public class CanvasGroupSpec : Spec<CanvasGroup>
+  public class CanvasGroupSpec : ComponentSpec<CanvasGroup>
   {
     public float Alpha { get; }
     public bool IsInteractable { get; }
@@ -23,13 +23,7 @@ namespace Specs.Unity
       IgnoreParentGroups = ignoreParentGroups;
     }
 
-    protected override CanvasGroup Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<CanvasGroup>();
-
-    protected override CanvasGroup GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<CanvasGroup>();
-
-    protected override void Update(Res res, CanvasGroup canvasGroup)
+    protected override void UpdateComponent(Res res, CanvasGroup canvasGroup)
     {
       canvasGroup.alpha = Alpha;
       canvasGroup.interactable = IsInteractable;

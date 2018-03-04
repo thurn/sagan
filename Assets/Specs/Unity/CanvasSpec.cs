@@ -90,7 +90,7 @@ namespace Specs.Unity
     }
   }
 
-  public class CanvasSpec : Spec<Canvas>
+  public class CanvasSpec : BehaviourSpec<Canvas>
   {
     public ICanvasRenderMode RenderMode { get; }
     public AdditionalCanvasShaderChannels AdditionalShaderChannels { get; }
@@ -103,13 +103,7 @@ namespace Specs.Unity
       AdditionalShaderChannels = additionalShaderChannels;
     }
 
-    protected override Canvas Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<Canvas>();
-
-    protected override Canvas GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<Canvas>();
-
-    protected override void Update(Res res, Canvas canvas)
+    protected override void UpdateComponent(Res res, Canvas canvas)
     {
       RenderMode.SetParams(res, canvas);
       canvas.additionalShaderChannels = AdditionalShaderChannels;

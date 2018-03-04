@@ -158,7 +158,7 @@ namespace Specs.Unity
     }
   }
 
-  public class ImageSpec : Spec<Image>
+  public class ImageSpec : BehaviourSpec<Image>
   {
     public SpriteName? SourceImage { get; }
     public Color Color { get; }
@@ -181,10 +181,7 @@ namespace Specs.Unity
       ImageType = imageType ?? new SimpleImageType();
     }
 
-    protected override Image Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<Image>();
-
-    protected override void Update(Res res, Image image)
+    protected override void UpdateComponent(Res res, Image image)
     {
       if (SourceImage.HasValue)
       {
@@ -199,8 +196,5 @@ namespace Specs.Unity
 
       ImageType.SetParams(image);
     }
-
-    protected override Image GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<Image>();
   }
 }

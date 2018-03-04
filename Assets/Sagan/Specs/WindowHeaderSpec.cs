@@ -18,7 +18,7 @@ namespace Sagan.Specs
     private static ITransformSpec Transform() =>
       new RectTransformSpec();
  
-    private static IImmutableList<ISpec> Children(
+    private static IImmutableList<Spec> Children(
       string windowTitle) =>
       SpecList(
         new LayoutElementSpec(

@@ -22,7 +22,7 @@ namespace Sagan.Specs
         size: new Vector2(x: 0f, y: 51f),
         pivot: TextAnchor.UpperCenter);
  
-    private static IImmutableList<ISpec> Children(UnitType unitType) =>
+    private static IImmutableList<Spec> Children(UnitType unitType) =>
       SpecList(
         new ImageSpec(
           color: Colors.BackgroundColor),

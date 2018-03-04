@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Specs.Unity
 {
-  public class TextSpec : Spec<Text>
+  public class TextSpec : BehaviourSpec<Text>
   {
     public string Text { get; }
     public FontName? Font { get; }
@@ -54,10 +54,7 @@ namespace Specs.Unity
       IsRaycastTarget = isRaycastTarget;
     }
 
-    protected override Text Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<Text>();
-
-    protected override void Update(Res res, Text component)
+    protected override void UpdateComponent(Res res, Text component)
     {
       component.text = Text;
 
@@ -84,9 +81,6 @@ namespace Specs.Unity
 
       component.raycastTarget = IsRaycastTarget;
     }
-
-    protected override Text GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<Text>();
   }
 
 }

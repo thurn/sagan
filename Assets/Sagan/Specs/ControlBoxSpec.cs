@@ -11,7 +11,7 @@ namespace Sagan.Specs
     public ControlBoxSpec(
       string boxName,
       string boxTitle,
-      IImmutableList<ISpec> children = null) : base(
+      IImmutableList<Spec> children = null) : base(
         name: boxName + "ControlBox",
         transform: Transform(),
         children: Children(
@@ -27,10 +27,10 @@ namespace Sagan.Specs
       new RectTransformSpec(
         pivot: TextAnchor.UpperCenter);
  
-    private static IImmutableList<ISpec> Children(
+    private static IImmutableList<Spec> Children(
       string boxName,
       string boxTitle,
-      IImmutableList<ISpec> children) =>
+      IImmutableList<Spec> children) =>
       SpecList(
         new ImageSpec(
           sourceImage: SpriteName.TextFieldNormal,

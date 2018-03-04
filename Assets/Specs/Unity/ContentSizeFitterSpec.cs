@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Specs.Unity
 {
-  public class ContentSizeFitterSpec : Spec<ContentSizeFitter>
+  public class ContentSizeFitterSpec : BehaviourSpec<ContentSizeFitter>
   {
     public ContentSizeFitter.FitMode HorizontalFitMode { get; }
     public ContentSizeFitter.FitMode VerticalFitMode { get; }
@@ -18,16 +18,10 @@ namespace Specs.Unity
       VerticalFitMode = verticalFitMode;
     }
 
-    protected override ContentSizeFitter Mount(Res res, GameObject gameObject) =>
-      gameObject.AddComponent<ContentSizeFitter>();
-
-    protected override void Update(Res res, ContentSizeFitter sizeFitter)
+    protected override void UpdateComponent(Res res, ContentSizeFitter sizeFitter)
     {
       sizeFitter.horizontalFit = HorizontalFitMode;
       sizeFitter.verticalFit = VerticalFitMode;
     }
-
-    protected override ContentSizeFitter GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<ContentSizeFitter>();
   }
 }

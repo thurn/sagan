@@ -1,5 +1,5 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using System;
+using System.Collections.Immutable;
 using Specs.Generated;
 using Specs.Util;
 using UnityEngine;
@@ -10,82 +10,95 @@ namespace Specs.Core
   {
     private readonly string _name;
     private readonly ITransformSpec _transform;
-    private readonly IImmutableList<ISpec> _components;
-    private readonly IImmutableList<ISpec> _children;
+    private readonly IImmutableList<Spec> _children;
 
     public override string Name => _name;
-
-    public sealed override bool Composite => true;
  
     public CompositeSpec(
       string name,
       ITransformSpec transform,
-      IImmutableList<ISpec> children,
+      IImmutableList<Spec> children,
       string specId = "")
     {
       _name = ValidateName(name) + ValidateName(specId);
       _transform = Errors.CheckNotNullPassthrough(transform, nameof(transform));
-      _components = SpecList(from child in children where !child.Composite select child);
-      _children = SpecList(from child in children where child.Composite select child);
+      _children = Errors.CheckNotNullPassthrough(children, nameof(children));
     }
-
-    public GameObject MountRoot(Res res, GameObject parent) => Mount(res, parent);
-
-    protected sealed override GameObject Mount(Res res, GameObject parent)
+ 
+    public GameObject LoadRoot(Res res, GameObject parent)
     {
       Errors.CheckNotNull(res, nameof(res));
       Errors.CheckNotNull(parent, nameof(parent));
-      if (parent.transform.Find(_name))
+
+      var childTransform = parent.transform.Find(_name);
+      if (childTransform != null)
+      {
+        childTransform.gameObject.SetActive(value: false);
+      }
+ 
+      var result = Mount(res, parent);
+ 
+      if (Errors.IsNullOrUnityNull(result))
+      {
+        throw Errors.MountFailed(parent.name, Name);
+      }
+ 
+      return result;
+    }
+
+    protected sealed override GameObject Mount(Res res, GameObject parent)
+    {
+      GameObject gameObject;
+      var childTransform = parent.transform.Find(_name);
+
+      if (childTransform == null)
+      {
+        gameObject = new GameObject(_name);
+        var transform = _transform.MountTransform(res, gameObject);
+        transform.SetParent(parent.transform, worldPositionStays: false);
+      }
+      else if (childTransform.gameObject.activeSelf)
       {
         throw Errors.DuplicateChild(parent.name, _name);
       }
+      else
+      {
+        gameObject = childTransform.gameObject;
+        gameObject.SetActive(value: true);
+        DeactivateChildren(gameObject);
+      }
 
-      var gameObject = new GameObject(_name);
-      var transform = _transform.MountTransform(res, gameObject);
-      transform.SetParent(parent.transform, worldPositionStays: false);
+      _transform.UpdateTransform(res, gameObject.transform);
 
       foreach (var child in _children)
       {
-        child.PerformMount(res, gameObject);
+        child.MountInternal(res, gameObject);
       }
 
-      foreach (var child in _components)
+      foreach (var child in _children)
       {
-        child.PerformMount(res, gameObject);
+        child.UpdateInternal(res, gameObject);
       }
-
-      return gameObject;
-    }
  
-    protected sealed override GameObject GetInstance(GameObject parent)
-    {
-      var transform = parent.transform.Find(_name);
-
-      if (Errors.IsNullOrUnityNull(transform) || Errors.IsNullOrUnityNull(transform.gameObject))
-      {
-        throw Errors.InstanceNotFound(parent.name, _name);
-      }
-
-      return transform.gameObject;
+      return gameObject;
     }
 
     protected sealed override void Update(Res res, GameObject instance)
     {
-      Errors.CheckNotNull(res, nameof(res));
-      Errors.CheckNotNull(instance, nameof(instance));
 
-      foreach (var child in _children)
+    }
+
+    private static void DeactivateChildren(GameObject parent)
+    {
+      foreach (Transform transform in parent.transform)
       {
-        child.PerformUpdate(res, instance);
+        transform.gameObject.SetActive(value: false);
       }
 
-      foreach (var child in _components)
+      foreach (var behaviour in parent.GetComponents<Behaviour>())
       {
-        child.PerformUpdate(res, instance);
+        behaviour.enabled = false;
       }
-
-      var transform = _transform.GetTransformInstance(instance);
-      _transform.UpdateTransform(res, transform);
     }
 
     private string ValidateName(string name)

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Specs.Unity
 {
-  public class EventSystemSpec : Spec<EventSystem>
+  public class EventSystemSpec : BehaviourSpec<EventSystem>
   {
     public bool SendNavigationEvents { get; }
     public int DragThreshold { get; }
@@ -18,16 +18,10 @@ namespace Specs.Unity
       DragThreshold = dragThreshold;
     }
 
-    protected override EventSystem Mount(Res res, GameObject gameObject)
-      => gameObject.AddComponent<EventSystem>();
-
-    protected override void Update(Res res, EventSystem eventSystem)
+    protected override void UpdateComponent(Res res, EventSystem eventSystem)
     {
       eventSystem.sendNavigationEvents = SendNavigationEvents;
       eventSystem.pixelDragThreshold = DragThreshold;
     }
-
-    protected override EventSystem GetInstance(GameObject gameObject) =>
-      gameObject.GetComponent<EventSystem>();
   }
 }
