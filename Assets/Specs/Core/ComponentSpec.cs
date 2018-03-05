@@ -1,23 +1,27 @@
-﻿using Specs.Generated;
+﻿using System.Collections.Generic;
+using System.Text;
+using Specs.Generated;
 using UnityEngine;
 
 namespace Specs.Core
 {
   public abstract class ComponentSpec<T> : Spec<T> where T: Component
   { 
-    protected override T Mount(Res res, GameObject parent)
+    protected override T Mount(Res res, GameObject parent, bool reuseFromCache)
     {
-      // TODO: Handle the component being removed from the spec.
-      var instance = parent.GetComponent<T>();
+      var instance = GetComponent(parent);
 
       if (instance == null)
       {
-        return parent.AddComponent<T>();
+        return AddComponent(parent);
       }
 
       return instance;
     }
- 
+
+    public sealed override void AddChildHashes(LinkedList<byte[]> children) => 
+      children.AddLast(Encoding.UTF8.GetBytes(Name));
+
     protected sealed override void Update(Res res, GameObject parent)
     {
       var instance = parent.GetComponent<T>();
@@ -25,6 +29,9 @@ namespace Specs.Core
     }
  
     protected abstract void UpdateComponent(Res res, T instance);
+
+    protected virtual T GetComponent(GameObject gameObject) =>
+      gameObject.GetComponent<T>();
 
     protected virtual T AddComponent(GameObject gameObject) =>
       gameObject.AddComponent<T>();

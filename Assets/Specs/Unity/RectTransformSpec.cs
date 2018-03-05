@@ -207,7 +207,7 @@ namespace Specs.Unity
     }
 
     public Transform MountTransform(Res res, GameObject gameObject) =>
-      Mount(res, gameObject);
+      Mount(res, gameObject, reuseFromCache: false);
 
     public void UpdateTransform(Res res, Transform instance)
     {

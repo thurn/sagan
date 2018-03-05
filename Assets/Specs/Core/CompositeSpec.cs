@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Specs.Generated;
 using Specs.Util;
 using UnityEngine;
+using System.Security.Cryptography;
+using System.Text;
+using Object = UnityEngine.Object;
 
 namespace Specs.Core
 {
@@ -11,6 +16,7 @@ namespace Specs.Core
     private readonly string _name;
     private readonly ITransformSpec _transform;
     private readonly IImmutableList<Spec> _children;
+    private string _structuralHash;
 
     public override string Name => _name;
  
@@ -24,81 +30,88 @@ namespace Specs.Core
       _transform = Errors.CheckNotNullPassthrough(transform, nameof(transform));
       _children = Errors.CheckNotNullPassthrough(children, nameof(children));
     }
- 
-    public GameObject LoadRoot(Res res, GameObject parent)
+
+    public void LoadRoot(Res res, GameObject parent, bool reuseFromCache = false)
     {
       Errors.CheckNotNull(res, nameof(res));
       Errors.CheckNotNull(parent, nameof(parent));
 
-      var childTransform = parent.transform.Find(_name);
-      if (childTransform != null)
+      var previousInstance = parent.transform.Find(_name);
+      if (previousInstance != null && !reuseFromCache)
       {
-        childTransform.gameObject.SetActive(value: false);
+        Object.Destroy(previousInstance.gameObject);
       }
  
-      var result = Mount(res, parent);
+      var result = Mount(res, parent, reuseFromCache: reuseFromCache);
  
       if (Errors.IsNullOrUnityNull(result))
       {
         throw Errors.MountFailed(parent.name, Name);
       }
- 
-      return result;
     }
 
-    protected sealed override GameObject Mount(Res res, GameObject parent)
+    public string GetStructuralHash()
+    {
+      if (_structuralHash == null)
+      {
+        var childBytes = new LinkedList<byte[]>();
+        AddChildHashes(childBytes);
+        var bytes = childBytes.SelectMany(selector: i => i).ToArray();
+        var hashstring = new SHA256Managed();
+        var hashed = hashstring.ComputeHash(bytes);
+        _structuralHash = Convert.ToBase64String(hashed);
+      }
+
+      return _structuralHash;
+    }
+ 
+    public sealed override void AddChildHashes(LinkedList<byte[]> children)
+    {
+      children.AddLast(Encoding.UTF8.GetBytes(Name));
+      foreach (var child in _children)
+      {
+        child.AddChildHashes(children);
+      }
+    }
+ 
+    protected sealed override GameObject Mount(Res res, GameObject parent, bool reuseFromCache)
     {
       GameObject gameObject;
-      var childTransform = parent.transform.Find(_name);
+      if (reuseFromCache)
+      {
+        var transform = parent.transform.Find(_name);
+        if (transform == null)
+        {
+          throw Errors.ChildNotFound(parent.name, _name);
+        }
 
-      if (childTransform == null)
+        gameObject = transform.gameObject;
+      }
+      else
       {
         gameObject = new GameObject(_name);
         var transform = _transform.MountTransform(res, gameObject);
         transform.SetParent(parent.transform, worldPositionStays: false);
       }
-      else if (childTransform.gameObject.activeSelf)
-      {
-        throw Errors.DuplicateChild(parent.name, _name);
-      }
-      else
-      {
-        gameObject = childTransform.gameObject;
-        gameObject.SetActive(value: true);
-        DeactivateChildren(gameObject);
-      }
-
-      _transform.UpdateTransform(res, gameObject.transform);
 
       foreach (var child in _children)
       {
-        child.MountInternal(res, gameObject);
+        child.MountInternal(res, gameObject, reuseFromCache);
       }
 
       foreach (var child in _children)
       {
         child.UpdateInternal(res, gameObject);
       }
- 
+
+      _transform.UpdateTransform(res, gameObject.transform);
+
       return gameObject;
     }
 
     protected sealed override void Update(Res res, GameObject instance)
     {
 
-    }
-
-    private static void DeactivateChildren(GameObject parent)
-    {
-      foreach (Transform transform in parent.transform)
-      {
-        transform.gameObject.SetActive(value: false);
-      }
-
-      foreach (var behaviour in parent.GetComponents<Behaviour>())
-      {
-        behaviour.enabled = false;
-      }
     }
 
     private string ValidateName(string name)

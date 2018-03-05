@@ -55,8 +55,8 @@ namespace Specs.Util
       new InvalidOperationException("[MountFailed] '" + objectName + " failed to create an instance of '" +
                                     typeName + "'");
 
-    public static Exception InstanceNotFound(string parentName, string childName) =>
-      new InvalidOperationException("[InstanceNotFound] '" + parentName + " does not contain an instance of '" +
+    public static Exception ChildNotFound(string parentName, string childName) =>
+      new InvalidOperationException("[ChildNotFound] '" + parentName + " does not contain a child named '" +
                                     childName + "'");
 
     public static Exception UnknownEnumValue<T>(T value) =>
