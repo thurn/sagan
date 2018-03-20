@@ -17,10 +17,10 @@ namespace Sagan.Specs
 
     private static ITransformSpec Transform() =>
       new RectTransformSpec();
- 
+
     private static IImmutableList<Spec> Children(
       string windowTitle) =>
-      SpecList(
+      List(
         new LayoutElementSpec(
           preferredHeight: 200f),
         new LayoutGroupSpec(
@@ -34,7 +34,7 @@ namespace Sagan.Specs
           transform: new RectTransformSpec(
             size: new Vector2(x: 0f, y: 50),
             pivot: TextAnchor.UpperCenter),
-          children: SpecList(
+          children: List(
             new ImageSpec(
               sourceImage: SpriteName.WindowHeader,
               imageType: new TiledImageType()),
@@ -46,7 +46,7 @@ namespace Sagan.Specs
         name: "WindowHeaderImage",
         transform: new RectTransformSpec(
           size: new Vector2(x: 500f, y: 150f)),
-        children: SpecList(
+        children: List(
           new ImageSpec(
             sourceImage: imageName,
             imageType: new SimpleImageType())));
@@ -57,7 +57,7 @@ namespace Sagan.Specs
         transform: new RectTransformSpec(
           horizontalAnchor: HorizontalAnchor.Stretch,
           verticalAnchor: VerticalAnchor.Stretch),
-        children: SpecList(
+        children: List(
           new ContentSizeFitterSpec(),
           new TextSpec(
             text: windowTitle,

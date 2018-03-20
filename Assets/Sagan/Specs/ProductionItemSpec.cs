@@ -14,16 +14,15 @@ namespace Sagan.Specs
       transform: Transform(),
       children: Children(unitType))
     {
-
     }
- 
+
     private static ITransformSpec Transform() =>
       new RectTransformSpec(
         size: new Vector2(x: 0f, y: 51f),
         pivot: TextAnchor.UpperCenter);
- 
+
     private static IImmutableList<Spec> Children(UnitType unitType) =>
-      SpecList(
+      List(
         new ImageSpec(
           color: Colors.BackgroundColor),
         new LayoutGroupSpec(
@@ -41,7 +40,7 @@ namespace Sagan.Specs
           name: unitType.GetName() + "Text",
           transform: new RectTransformSpec(
             horizontalAnchor: HorizontalAnchor.Stretch),
-          children: SpecList(
+          children: List(
             new TextSpec(
               text: unitType.GetName(),
               alignment: TextAnchor.MiddleLeft,

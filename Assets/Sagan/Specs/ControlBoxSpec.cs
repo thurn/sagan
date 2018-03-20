@@ -15,23 +15,22 @@ namespace Sagan.Specs
         name: boxName + "ControlBox",
         transform: Transform(),
         children: Children(
-          boxName, 
+          boxName,
           boxTitle,
-          children ?? SpecList())
+          children ?? List())
       )
     {
-
     }
- 
+
     private static ITransformSpec Transform() =>
       new RectTransformSpec(
         pivot: TextAnchor.UpperCenter);
- 
+
     private static IImmutableList<Spec> Children(
       string boxName,
       string boxTitle,
       IImmutableList<Spec> children) =>
-      SpecList(
+      List(
         new ImageSpec(
           sourceImage: SpriteName.TextFieldNormal,
           imageType: new TiledImageType()),
@@ -50,7 +49,7 @@ namespace Sagan.Specs
           name: boxName + "ControlBoxTitle",
           transform: new RectTransformSpec(
             size: new Vector2(x: 0f, y: 50f)),
-          children: SpecList(
+          children: List(
             new TextSpec(
               text: boxTitle,
               font: FontName.EurostileBqBoldExtended,

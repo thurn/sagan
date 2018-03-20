@@ -14,7 +14,7 @@ namespace Sagan.Specs
       name: name + "ImageBoxBackground",
       transform: new RectTransformSpec(
         size: size),
-      children: SpecList(
+      children: List(
         new ImageSpec(
           sourceImage: SpriteName.ImageBoxBackground),
         new LayoutElementSpec(
@@ -26,7 +26,7 @@ namespace Sagan.Specs
             size: new Vector2(x: -10f, y: -10f),
             horizontalAnchor: HorizontalAnchor.Stretch,
             verticalAnchor: VerticalAnchor.Stretch),
-            children: SpecList(
+            children: List(
               new ImageSpec(
                 sourceImage: image)))))
     {

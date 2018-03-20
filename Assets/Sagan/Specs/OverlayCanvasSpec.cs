@@ -17,7 +17,7 @@ namespace Sagan.Specs
     }
 
     private static IImmutableList<Spec> Children(IImmutableList<Spec> children) =>
-      SpecList(
+      List(
         new CanvasSpec(
           renderMode: new ScreenSpaceOverlayRenderMode(
             pixelPerfect: true)),

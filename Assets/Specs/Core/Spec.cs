@@ -8,7 +8,7 @@ namespace Specs.Core
 {
   public abstract class Spec
   {
-    public static IImmutableList<T> List<T>(params T[] items) =>
+    public static IImmutableList<Spec> List(params Spec[] items) =>
       ImmutableArray.CreateRange(items);
 
     public abstract void MountInternal(Res res, GameObject parent, bool reuseFromCache);
@@ -16,7 +16,7 @@ namespace Specs.Core
     public abstract void UpdateInternal(Res res, GameObject parent);
 
     public abstract void AddChildHashes(LinkedList<byte[]> children);
- 
+
     public abstract string Name { get; }
   }
 
@@ -40,15 +40,9 @@ namespace Specs.Core
       Errors.CheckNotNull(parent, nameof(parent));
       Update(res, parent);
     }
- 
-    public static IImmutableList<Spec> SpecList(params Spec[] children) =>
-      ImmutableArray.CreateRange(children);
-
-    public static IImmutableList<Spec> SpecList(IEnumerable<Spec> children) =>
-      ImmutableArray.CreateRange(children);
 
     public override string Name => GetType().Name;
- 
+
     protected abstract T Mount(Res res, GameObject parent, bool reuseFromCache);
 
     protected abstract void Update(Res res, GameObject parent);
