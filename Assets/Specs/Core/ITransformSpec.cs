@@ -1,4 +1,4 @@
-﻿using Specs.Generated;
+﻿using Specs.Generated.Resources;
 using UnityEngine;
 
 namespace Specs.Core

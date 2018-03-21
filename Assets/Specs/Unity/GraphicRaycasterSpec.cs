@@ -1,5 +1,5 @@
 ﻿using Specs.Core;
-using Specs.Generated;
+using Specs.Generated.Resources;
 using UnityEngine.UI;
 
 namespace Specs.Unity

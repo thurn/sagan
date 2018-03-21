@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Immutable;
 using Specs.Core;
-using Specs.Generated;
+using Specs.Generated.Resources;
 using Specs.Util;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Specs.Unity
 {
@@ -71,13 +70,9 @@ namespace Specs.Unity
 
     protected override void UpdateComponent(Res res, RectTransform transform)
     {
-      //      component.sizeDelta = Vector2.zero;
-      //      component.position = Vector3.zero;
-      //      component.pivot = Vector2.zero;
-      //      component.anchorMin = Vector2.zero;
-      //      component.anchorMax = Vector2.zero;
-      //      component.localEulerAngles = Vector3.zero;
-      //      component.localScale = Vector3.one;
+      // component.sizeDelta = Vector2.zero; component.position = Vector3.zero; component.pivot =
+      // Vector2.zero; component.anchorMin = Vector2.zero; component.anchorMax = Vector2.zero;
+      // component.localEulerAngles = Vector3.zero; component.localScale = Vector3.one;
 
       transform.sizeDelta = Size;
       transform.position = Position;
@@ -87,64 +82,53 @@ namespace Specs.Unity
       transform.localEulerAngles = EulerRotation;
       transform.localScale = Scale;
 
-//      if (transform.sizeDelta != Size)
-//      {
-//        transform.sizeDelta = Size;
-//      }
-//      
-//      if (transform.position != Position)
-//      {
-//        transform.position = Position;
-//      }
-//
-//      if (transform.pivot != Pivot)
-//      {
-//        transform.pivot = Pivot;
-//      }
-//
-//      if (transform.anchorMin != AnchorMin)
-//      {
-//        transform.anchorMin = AnchorMin;
-//      }
-//
-//      if (transform.anchorMax != AnchorMax)
-//      {
-//        transform.anchorMax = AnchorMax;
-//      }
-//
-//      if (transform.localEulerAngles != EulerRotation)
-//      {
-//        transform.localEulerAngles = EulerRotation;
-//      }
-//
-//      if (transform.localScale != Scale)
-//      {
-//        transform.localScale = Scale;
-//      }
+      // if (transform.sizeDelta != Size) { transform.sizeDelta = Size; }
+      //
+      // if (transform.position != Position) { transform.position = Position; }
+      //
+      // if (transform.pivot != Pivot) { transform.pivot = Pivot; }
+      //
+      // if (transform.anchorMin != AnchorMin) { transform.anchorMin = AnchorMin; }
+      //
+      // if (transform.anchorMax != AnchorMax) { transform.anchorMax = AnchorMax; }
+      //
+      // if (transform.localEulerAngles != EulerRotation) { transform.localEulerAngles =
+      // EulerRotation; }
+      //
+      // if (transform.localScale != Scale) { transform.localScale = Scale; }
     }
- 
+
     private static Vector2 PivotValue(TextAnchor pivot)
     {
       switch (pivot)
       {
         case TextAnchor.UpperLeft:
           return new Vector2(x: 0f, y: 1f);
+
         case TextAnchor.UpperCenter:
           return new Vector2(x: 0.5f, y: 1f);
+
         case TextAnchor.UpperRight:
           return new Vector2(x: 1f, y: 1f);
+
         case TextAnchor.MiddleLeft:
           return new Vector2(x: 0f, y: 0.5f);
+
         case TextAnchor.MiddleCenter:
           return new Vector2(x: 0.5f, y: 0.5f);
+
         case TextAnchor.MiddleRight:
           return new Vector2(x: 1f, y: 0.5f);
+
         case TextAnchor.LowerLeft:
           return new Vector2(x: 0f, y: 0f);
+
         case TextAnchor.LowerCenter:
           return new Vector2(x: 0.5f, y: 1f);
+
         case TextAnchor.LowerRight:
           return new Vector2(x: 1f, y: 0f);
+
         default:
           throw Errors.UnknownEnumValue(pivot);
       }
@@ -165,18 +149,22 @@ namespace Specs.Unity
           minX = 1f;
           maxX = 1f;
           break;
+
         case HorizontalAnchor.Center:
           minX = 0.5f;
           maxX = 0.5f;
           break;
+
         case HorizontalAnchor.Left:
           minX = 0f;
           maxX = 0f;
           break;
+
         case HorizontalAnchor.Stretch:
           minX = 0f;
           maxX = 1f;
           break;
+
         default:
           throw Errors.UnknownEnumValue(verticalAnchor);
       }
@@ -187,18 +175,22 @@ namespace Specs.Unity
           minY = 1f;
           maxY = 1f;
           break;
+
         case VerticalAnchor.Middle:
           minY = 0.5f;
           maxY = 0.5f;
           break;
+
         case VerticalAnchor.Bottom:
           minY = 0f;
           maxY = 0f;
           break;
+
         case VerticalAnchor.Stretch:
           minY = 0f;
           maxY = 1f;
           break;
+
         default:
           throw Errors.UnknownEnumValue(verticalAnchor);
       }

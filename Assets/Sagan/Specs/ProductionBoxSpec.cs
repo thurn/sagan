@@ -1,6 +1,6 @@
-﻿using Sagan.Core;
-using Sagan.Specs;
+﻿using Sagan.Specs;
 using Specs.Core;
+using Specs.Generated.Model;
 
 public static class ProductionBoxSpec
 {

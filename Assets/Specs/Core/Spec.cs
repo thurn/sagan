@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using Specs.Generated;
+using Specs.Generated.Resources;
 using Specs.Util;
 using UnityEngine;
 

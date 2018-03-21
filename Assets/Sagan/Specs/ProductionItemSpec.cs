@@ -1,7 +1,8 @@
 ﻿using System.Collections.Immutable;
 using Sagan.Core;
 using Specs.Core;
-using Specs.Generated;
+using Specs.Generated.Resources;
+using Specs.Generated.Model;
 using Specs.Unity;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-﻿namespace Specs.Generated
+﻿namespace Specs.Generated.Resources
 {
   public enum FontName
   {

@@ -1,18 +1,8 @@
 ﻿using System;
+using Specs.Generated.Model;
 
 namespace Sagan.Core
 {
-
-  public enum UnitType
-  {
-    Unknown,
-    Probe,
-    Extractor,
-    Refinery,
-    LaunchSystem,
-    Autofactory
-  }
-
   public static class UnitTypeExtension
   {
     public static string GetName(this UnitType unitType)

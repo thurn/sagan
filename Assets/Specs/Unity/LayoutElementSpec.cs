@@ -1,5 +1,5 @@
 ﻿using Specs.Core;
-using Specs.Generated;
+using Specs.Generated.Resources;
 using UnityEngine.UI;
 
 namespace Specs.Unity
@@ -15,14 +15,20 @@ namespace Specs.Unity
 
     /// <param name="minWidth">The minimum width this layout element can be allocated</param>
     /// <param name="minHeight">The minimum height this layout element may be allocated.</param>
-    /// <param name="preferredWidth">The preferred width this layout element should be allocated
-    /// if there is sufficient space.</param>
-    /// <param name="preferredHeight">The preferred height this layout element should be allocated
-    /// if there is sufficient space.</param>
-    /// <param name="flexibleWidth">The extra relative width this layout element should be
-    /// allocated if there is additional available space.</param>
-    /// <param name="flexibleHeight">The extra relative height this layout element should be
-    /// allocated if there is additional available space.</param>
+    /// <param name="preferredWidth">
+    /// The preferred width this layout element should be allocated if there is sufficient space.
+    /// </param>
+    /// <param name="preferredHeight">
+    /// The preferred height this layout element should be allocated if there is sufficient space.
+    /// </param>
+    /// <param name="flexibleWidth">
+    /// The extra relative width this layout element should be allocated if there is additional
+    /// available space.
+    /// </param>
+    /// <param name="flexibleHeight">
+    /// The extra relative height this layout element should be allocated if there is additional
+    /// available space.
+    /// </param>
     public LayoutElementSpec(
       float? minWidth = null,
       float? minHeight = null,

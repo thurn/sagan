@@ -1,5 +1,5 @@
 ﻿using Specs.Core;
-using Specs.Generated;
+using Specs.Generated.Resources;
 using Specs.Util;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,6 +83,7 @@ namespace Specs.Unity
 
         case LayoutDirection.Vertical:
           return gameObject.AddComponent<VerticalLayoutGroup>();
+
         default:
           throw Errors.UnknownEnumValue(LayoutDirection);
       }
@@ -98,7 +99,7 @@ namespace Specs.Unity
       component.childControlWidth = ChildBehavior.LayoutControlsWidth;
       component.childControlHeight = ChildBehavior.LayoutControlsHeight;
     }
-  
+
     private static RectOffset OffsetForPadding(Padding padding) =>
       new RectOffset(padding.Left, padding.Right, padding.Top, padding.Bottom);
   }

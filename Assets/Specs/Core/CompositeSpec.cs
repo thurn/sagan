@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Specs.Generated;
+using Specs.Generated.Resources;
 using Specs.Util;
 using UnityEngine;
 using System.Security.Cryptography;
@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace Specs.Core
 {
-  public class CompositeSpec: Spec<GameObject>
+  public class CompositeSpec : Spec<GameObject>
   {
     private readonly string _name;
     private readonly ITransformSpec _transform;
@@ -19,7 +19,7 @@ namespace Specs.Core
     private string _structuralHash;
 
     public override string Name => _name;
- 
+
     public CompositeSpec(
       string name,
       ITransformSpec transform,
@@ -41,9 +41,9 @@ namespace Specs.Core
       {
         Object.Destroy(previousInstance.gameObject);
       }
- 
+
       var result = Mount(res, parent, reuseFromCache: reuseFromCache);
- 
+
       if (Errors.IsNullOrUnityNull(result))
       {
         throw Errors.MountFailed(parent.name, Name);
@@ -64,7 +64,7 @@ namespace Specs.Core
 
       return _structuralHash;
     }
- 
+
     public sealed override void AddChildHashes(LinkedList<byte[]> children)
     {
       children.AddLast(Encoding.UTF8.GetBytes(Name));
@@ -73,7 +73,7 @@ namespace Specs.Core
         child.AddChildHashes(children);
       }
     }
- 
+
     protected sealed override GameObject Mount(Res res, GameObject parent, bool reuseFromCache)
     {
       GameObject gameObject;
@@ -111,7 +111,6 @@ namespace Specs.Core
 
     protected sealed override void Update(Res res, GameObject instance)
     {
-
     }
 
     private string ValidateName(string name)

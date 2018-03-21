@@ -1,6 +1,5 @@
 ﻿using Specs.Core;
-using Specs.Generated;
-using UnityEngine;
+using Specs.Generated.Resources;
 using UnityEngine.EventSystems;
 
 namespace Specs.Unity

@@ -1,7 +1,7 @@
 ﻿using Specs.Util;
 using UnityEngine;
 
-namespace Specs.Generated
+namespace Specs.Generated.Resources
 {
   public class Res : MonoBehaviour
   {
@@ -17,21 +17,26 @@ namespace Specs.Generated
     {
       throw Errors.UnknownEnumValue(materialName);
     }
-  
+
     public Sprite GetSprite(SpriteName spriteName)
     {
       switch (spriteName)
       {
         case SpriteName.ExampleImage:
           return ExampleImage;
+
         case SpriteName.ImageBoxBackground:
           return ImageBoxBackground;
+
         case SpriteName.WindowBackground:
           return WindowBackground;
+
         case SpriteName.WindowHeader:
           return WindowHeader;
+
         case SpriteName.TextFieldNormal:
           return TextFieldNormal;
+
         default:
           throw Errors.UnknownEnumValue(spriteName);
       }
@@ -43,8 +48,10 @@ namespace Specs.Generated
       {
         case FontName.EurostileBqBoldExtended:
           return EurostileBqBoldExtended;
+
         case FontName.RobotoRegular:
           return RobotoRegular;
+
         default:
           throw Errors.UnknownEnumValue(fontName);
       }
