@@ -170,7 +170,7 @@ namespace Specs.Unity
       SpriteName? sourceImage = null,
       Color? color = null,
       MaterialName? material = null,
-      bool isRaycastTarget = false,
+      bool isRaycastTarget = true,
       IImageType imageType = null
       )
     {

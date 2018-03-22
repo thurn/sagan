@@ -1,5 +1,6 @@
 ﻿using Specs.Core;
 using Specs.Generated.Resources;
+using Specs.Unity.Events;
 using UnityEngine;
 
 namespace Sagan.Core
@@ -16,6 +17,9 @@ namespace Sagan.Core
       var specHash = _spec.GetStructuralHash();
       _spec.LoadRoot(Res, gameObject, reuseFromCache: specHash == _lastSpecHash);
       _lastSpecHash = specHash;
+      //var green = transform.Find("OverlayCanvas/TextBox");
+      //Debug.Log("Green? " + green);
+      //green.gameObject.AddComponent<PointerClickHandlerComponent>();
     }
 
     private static CompositeSpec Create() => RootSpec.New();

@@ -36,7 +36,7 @@ namespace Specs.Unity
       bool resizeTextForBestFit = false,
       Color? color = null,
       MaterialName? material = null,
-      bool isRaycastTarget = false)
+      bool isRaycastTarget = true)
     {
       Text = text;
       Font = font;

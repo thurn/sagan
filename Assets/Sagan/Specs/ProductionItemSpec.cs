@@ -37,15 +37,18 @@ namespace Sagan.Specs
           name: unitType.GetName(),
           size: new Vector2(x: 50f, y: 0),
           image: SpriteName.ExampleImage),
+        new EventHandlerSpec(
+          actionType: ActionType.PointerClick,
+          action: () => Debug.Log("Click!")),
         new CompositeSpec(
           name: unitType.GetName() + "Text",
           transform: new RectTransformSpec(
             horizontalAnchor: HorizontalAnchor.Stretch),
-          children: List(
-            new TextSpec(
-              text: unitType.GetName(),
-              alignment: TextAnchor.MiddleLeft,
-              font: FontName.RobotoRegular,
-              fontSize: 20))));
+              children: List(
+                new TextSpec(
+                  text: unitType.GetName(),
+                  alignment: TextAnchor.MiddleLeft,
+                  font: FontName.RobotoRegular,
+                  fontSize: 20))));
   }
 }

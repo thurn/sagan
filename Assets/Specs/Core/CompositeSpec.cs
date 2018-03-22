@@ -90,6 +90,7 @@ namespace Specs.Core
       else
       {
         gameObject = new GameObject(_name);
+        gameObject.layer = 5;
         var transform = _transform.MountTransform(res, gameObject);
         transform.SetParent(parent.transform, worldPositionStays: false);
       }

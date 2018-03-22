@@ -19,8 +19,7 @@ namespace Sagan.Specs
     private static IImmutableList<Spec> Children(IImmutableList<Spec> children) =>
       List(
         new CanvasSpec(
-          renderMode: new ScreenSpaceOverlayRenderMode(
-            pixelPerfect: true)),
+          renderMode: new ScreenSpaceOverlayRenderMode()),
         new CanvasScalerSpec(
           scaleMode: CanvasScaler.ScaleMode.ScaleWithScreenSize,
           referenceResolution: new Vector2(x: 1920, y: 1080)),

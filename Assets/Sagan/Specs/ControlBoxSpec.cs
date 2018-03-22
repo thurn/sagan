@@ -50,6 +50,9 @@ namespace Sagan.Specs
           transform: new RectTransformSpec(
             size: new Vector2(x: 0f, y: 50f)),
           children: List(
+            new EventHandlerSpec(
+              actionType: ActionType.PointerClick,
+              action: () => Debug.Log("CLICKK")),
             new TextSpec(
               text: boxTitle,
               font: FontName.EurostileBqBoldExtended,
